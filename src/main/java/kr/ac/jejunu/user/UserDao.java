@@ -2,9 +2,15 @@ package kr.ac.jejunu.user;
 
 import java.sql.*;
 
-public abstract class UserDao {
+public class UserDao {
+    private final ConnectionMaker connectionMaker;
+
+    public UserDao(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
+    }
+
     public User get(Integer id) throws ClassNotFoundException, SQLException {
-        Connection connection = getConnection();
+        Connection connection = connectionMaker.getConnection();
 
         // prepared는 캐시되어서 재사용하는 경우에 빨라짐
         PreparedStatement preparedStatement =
@@ -27,7 +33,7 @@ public abstract class UserDao {
     }
 
     public void insert(User user) throws ClassNotFoundException, SQLException {
-        Connection connection = getConnection();
+        Connection connection = connectionMaker.getConnection();
 
         // prepared는 캐시되어서 재사용하는 경우에 빨라짐
         PreparedStatement preparedStatement =
@@ -43,6 +49,4 @@ public abstract class UserDao {
         preparedStatement.close();
         connection.close();
     }
-
-    abstract public Connection getConnection() throws ClassNotFoundException, SQLException;
 }
