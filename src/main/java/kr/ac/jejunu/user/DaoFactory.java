@@ -21,11 +21,6 @@ public class DaoFactory {
     private String password;
 
     @Bean
-    public UserDao userDao() {
-        return new UserDao(jdbcContext());
-    }
-
-    @Bean
     public JdbcTemplate jdbcContext() {
         return new JdbcTemplate(dataSource());
     }

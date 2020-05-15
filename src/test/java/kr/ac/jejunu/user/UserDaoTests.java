@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.GenericGroovyApplicationContext;
 
 import java.sql.SQLException;
 
@@ -14,13 +16,16 @@ import static org.hamcrest.core.Is.is;
 
 public class UserDaoTests {
     String password = "1234";
-    String name = "jade";
+    String name = "hulk";
 
     private static UserDao userDao;
 
     @BeforeAll
     public static void setup() {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactory.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext("kr.ac.jejunu.user");
+
+//        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("daoFactory.xml");
+//        ApplicationContext applicationContext = new GenericGroovyApplicationContext("daoFactory.groovy");
         userDao = applicationContext.getBean("userDao", UserDao.class);
     }
 
